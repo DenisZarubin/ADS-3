@@ -1,3 +1,4 @@
+// Copyright 2021 NNTU-CS
 #include <string>
 #include "tstack.h"
 
@@ -17,6 +18,7 @@ int priority(char sym) {
 }
 
 std::string infx2pstfx(std::string inf) {
+  // добавьте сюда нужный код
   TStack<char> stack1;
     std::string str;
     for (int i = 0; i < inf.length(); i++) {
@@ -56,6 +58,8 @@ std::string infx2pstfx(std::string inf) {
 }
 
 int eval(std::string pst) {
+    // добавьте сюда нужный код
+    return 0;
   TStack<int> stack2;
     int output;
     for (int i = 0; i < pst.length(); i++) {
