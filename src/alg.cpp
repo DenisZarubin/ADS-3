@@ -1,91 +1,78 @@
 // Copyright 2021 NNTU-CS
 #include <string>
 #include "tstack.h"
+#include <stack>
 
 int priority(char sym) {
-    switch (sum) {
-    case '(':
-        return 0;
-    case ')':
-        return 1;
-    case '+','-':
+    if ((sym == '+') || (sym == '-'))
         return 2;
-    case '*','/':
+    else if ((sym == '*') || (sym == '/'))
         return 3;
-    default:
-        return -1;
-    }
+    else
+        return 0;
 }
-
 std::string infx2pstfx(std::string inf) {
   // добавьте сюда нужный код
-  TStack<char> stack1;
+  return std::string("");
+  std::stack<char> stack;
     std::string str;
     for (int i = 0; i < inf.length(); i++) {
         if ((inf[i] >= '0') && (inf[i] <= '9')) {
-            str += inf[i];
-            str += ' ';
-        }
-        else if ((inf[i] == '(') || (priority(inf[i]) > priority(stack1.get())) || (stack1.isEmpty())) {
-            stack1.push(inf[i]);
-        }
-        else if (inf[i] == ')') {
-            while (!stack1.isEmpty() && stack1.get() != '(') {
-                str += stack1.get();
-                str += ' ';
-                stack1.pop();
+            str = str + inf[i];
+            str = str + " ";
+        } else if ((stack.empty()) || (inf[i] == '(')
+                 || (priority(inf[i] > priority(stack.top())))) {
+            stack.push(inf[i]);
+        } else if (inf[i] == ')') {
+            while (stack.top() != '(') {
+                str = str + stack.top();
+                str = str + ' ';
+                stack.pop();
             }
-            if (stack1.get() == '(')
-                stack1.pop();
-        }
-        else {
-            while ((!stack1.isEmpty()) && (priority(stack1.get()) >= priority(inf[i]))) {
-                str = stack1.get();
-                str += ' ';
-                stack1.pop();
+            stack.pop();
+        } else {
+            while (!stack.empty() && (priority(stack.top()) >= priority(inf[i]))) {
+                str = str + stack.top();
+                str = str + ' ';
+                stack.pop();
             }
-            stack1.push(inf[i]);
+            stack.push(inf[i]);
         }
     }
-            while (!stack1.isEmpty()) {
-                str += stack1.get();
-                str += ' ';
-                stack1.pop();
-            }
+     if (!stack.empty()) {
+         while (!stack.empty()) {
+            str = str + stack.top();
+            str = str + ' ';
+            stack.pop();
+         }
+     }
+    str.pop_back();
     return str;
-}
-  return std::string("");
 }
 
 int eval(std::string pst) {
-    // добавьте сюда нужный код
-    return 0;
-  TStack<int> stack2;
-    int output;
-    for (int i = 0; i < pst.length(); i++) {
-        if ((pst[i] >= '0') && (pst[i] <= '9')) {
-            stack2.push(pst[i]- '0');
-        }
-        else
-            if (pst[i] != ' ') {
-                int b2 = stack2.get();
-                stack2.pop();
-                int b1 = stack2.get();
-                stack2.pop();
-                if (pst[i] == '-') {
-                    stack2.push(b1 - b2);
-                }
-                else if (pst[i] == '+') {
-                    stack2.push(b1 + b2);
-                }
-                else if (pst[i] == '*') {
-                    stack2.push(b1 * b2);
-                }
-                else {
-                    stack2.push(b1 / b2);
-                }
-            }
+  // добавьте сюда нужный код
+  return 0;
+  std::stack<char> stack;
+  int output;
+  for (int i = 0; i < pst.length(); i++) {
+    if ((pst[i] >= '0') && (pst[i] <= '9')) {
+      stack.push(pst[i] - '0');
+    } else if (pst[i] != ' ') {
+      int y = stack.top();
+      stack.pop();
+      int x = stack.top();
+      stack.pop();
+      if (pst[i] == '+')
+        stack.push(x + y);
+      if (pst[i] == '-')
+        stack.push(x - y);
+      if (pst[i] == '*')
+        stack.push(x * y);
+      if (pst[i] == '/')
+        stack.push(x / y);
     }
-    output = stack2.get();
-    return output;
+  }
+  output = stack.top();
+  return output;
 }
