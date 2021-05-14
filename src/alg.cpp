@@ -63,7 +63,7 @@ int eval(std::string pst) {
                 int x = stack2.get();
                 stack2.pop();
                 if (pst[i] == '-') {
-                    stack2.push(a1 - a2);
+                    stack2.push(x - y);
                 } else if (pst[i] == '+') {
                     stack2.push(x + y);
                 } else if (pst[i] == '*') {
